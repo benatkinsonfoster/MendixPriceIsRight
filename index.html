@@ -208,15 +208,15 @@
             console.log(matrix);
             if (matrix.m41 == 0) {
             matrix.m41 += 100;
+            matrix.m42 += 300;
             } else {
-                console.log(matrix.m41);
-                console.log(matrix);
-                var newVal = matrix.m41 - 100;
+                var newVal = matrix.m42 - 300;
                 var newValPositive =- newVal
                 console.log(newValPositive);
-                matrix.m41 = newValPositive;
+                matrix.m42 = newValPositive;
+                matrix.m41 += 100;
             }
-            var code = "translate(-" + 3*matrix.m41 + "px," + matrix.m41 + "px)";
+            var code = "translate(-" + matrix.m42 + "px," + matrix.m41 + "px)";
             console.log(code);
             player.style.WebkitTransform = code;
             }

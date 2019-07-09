@@ -205,6 +205,7 @@
                 console.log("Oops you've run out of money!");
             } else {
             console.log(matrix.m41);
+            console.log(matrix);
             if (matrix.m41 == 0) {
             matrix.m41 += 100;
             } else {
@@ -215,7 +216,7 @@
                 console.log(newValPositive);
                 matrix.m41 = newValPositive;
             }
-            var code = "translate(-" + 0.33*matrix.m41 + "px," + matrix.m41 + "px)";
+            var code = "translate(-" + 3*matrix.m41 + "px," + matrix.m41 + "px)";
             console.log(code);
             player.style.WebkitTransform = code;
             }

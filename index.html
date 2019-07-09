@@ -1,0 +1,229 @@
+<html>
+<head>
+    <style>
+        .object {
+            position: absolute;
+            transition: all 2s ease-in-out;
+            -webkit-transition: all 2s ease-in-out; /** Chrome & Safari **/
+            -moz-transition: all 2s ease-in-out; /** Firefox **/
+            -o-transition: all 2s ease-in-out; /** Opera **/
+        }
+        .climber {
+            top: 216px;
+            left: -40px;
+            width: 100px;
+            height: auto;
+            transform: rotate(30);
+            transform: translate(0px,-0px);
+            -webkit-transform: translate(0px,-0px); /** Chrome & Safari **/
+            -o-transform: translate(0px,-0px); /** Opera **/
+            -moz-transform: translate(0px,-0px); /** Firefox **/
+        }
+        .upTenPercent {
+            transform: translate(30px,-30px);
+            -webkit-transform: translate(30px,-30px); /** Chrome & Safari **/
+            -o-transform: translate(30px,-30px); /** Opera **/
+            -moz-transform: translate(30px,-30px); /** Firefox **/
+        }
+        #line-one {
+        top: 250px;
+        left: 30px;
+        width: 712px;
+        height: 47px;
+        border-bottom: 1px solid red;
+        -webkit-transform:
+            translateY(20px)
+            translateX(5px)
+            rotate(144deg);
+        position: absolute;
+        /* top: -20px; */
+        width: 0;
+        }
+        #mountain {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        width: 500px;
+        height: 500px;
+        background: url(img/steep_hill.png);
+        /* The points are: centered top, left bottom, right bottom */
+        clip-path: polygon(50% 0, 0 100%, 50% 100%);
+        /*border-style: solid;
+        border-width: 0 0 547px 547px;
+        border-color: transparent transparent #007bff transparent;*/
+        transition: all 2s ease-in-out;
+        -webkit-transition: all 2s ease-in-out; /** Chrome & Safari **/
+        -moz-transition: all 2s ease-in-out; /** Firefox **/
+        -o-transition: all 2s ease-in-out; /** Opera **/
+        transform: rotate(30);
+        transform: translate(0px,-0px);
+        -webkit-transform: translate(0px,-0px); /** Chrome & Safari **/
+        -o-transform: translate(0px,-0px); /** Opera **/
+        -moz-transform: translate(0px,-0px); /** Firefox **/
+        }
+        .questions {
+            background: #fff;
+            z-index: 999999999;
+            display: block;
+            position: absolute;
+            padding: 10px;
+            margin-left: -10px;
+            width: 500px;
+        }
+        .visual {
+            z-index: -9999;
+        }
+        .outer {
+            margin-top: -250px;
+        }
+        body {
+            height: 100vh;
+            overflow: hidden;
+            width 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+    <div class="container visual">
+        <div id="axis" class="one">
+        <img class="object climber move-right" id="player" src="img/swan.png"/>
+        <div id="line-one"></div>
+        <div id="mountain"></div>
+        </div>
+    </div>
+    <div class="container questions">
+    <div class="question-container">
+        <div id="question"></div>
+        <div id="answer-one"></div>
+        <div id="answer-two"></div>
+        <div id="answer-three"></div>
+        <div id="answer-four"></div>
+    </div>
+    <div class="menu">
+            <button onclick="redirect()">Click Me</button>
+            <button id="move-up" onclick="moveUp10()">Move Up 10</button>
+            <button id="move-up" onclick="moveUp30()">Move Up 30</button>
+            <button id="move-up" onclick="moveUp50()">Move Up 50</button>
+            <button id="move-up" onclick="moveUp100()">Move Up 100</button>
+            <div id="question">
+
+            </div>
+    </div>
+    </div>
+    </div>
+<script type="text/javascript">
+        var moveUpButton = document.getElementById("move-up");
+
+        var dataSet = {
+            food: { question: "How much is toast?", answerOne: 20, answerTwo: 50, answerThree: 70 },
+            social: { question: "How much is cheese?", answerOne: 30, answerTwo: 40, answerThree: 10 },
+            travel: { question: "How much is bread?", answerOne: 50, answerTwo: 90, answerThree: 100 },
+        }
+
+        document.getElementById("question").innerHTML = "<p class='question'>" + dataSet.food.question + "</p>";
+    document.getElementById("answer-one").innerHTML = "<button class='answer-button'>£" + dataSet.food.answerOne + "</button>";
+        document.getElementById("answer-two").innerHTML = "<button class='answer-button'>£" + dataSet.food.answerTwo + "</button>";
+        document.getElementById("answer-three").innerHTML = "<button class='answer-button'>£" + dataSet.food.answerThree + "</button>";
+        document.getElementById("answer-four").innerHTML = "<button class='answer-button'>£" + dataSet.food.answerFour + "</button>";
+
+
+        function redirect(){
+            var points = 20;
+            window.top.location = "http://localhost:8080/link/completePriceIsRight?pointsString=" + points;
+        }
+
+        function moveUp10() {
+            console.log(dataSet.food.question);
+            var player = document.getElementById("mountain");
+            var style = window.getComputedStyle(player);
+            var matrix = new WebKitCSSMatrix(style.webkitTransform);
+            if (matrix.m41 <= -535) {
+                console.log("Oops you've run out of money!");
+                player.style.WebkitTransform = "translate(600px,150px) rotate(1080deg)";
+            } else {
+            console.log(matrix.m41);
+            if (matrix.m41 == 0) {
+            matrix.m41 += 50;
+            } else {
+                console.log(matrix.m41);
+                var newVal = matrix.m41 - 10;
+                var newValPositive =- newVal
+                console.log(newValPositive);
+                matrix.m41 = newValPositive;
+            }
+            var code = "translate(-" + matrix.m41 + "px," + matrix.m41 + "px)";
+            console.log(code);
+            player.style.WebkitTransform = code;
+            }
+        }
+        function moveUp30() {
+            var player = document.getElementById("mountain");
+            var style = window.getComputedStyle(player);
+            var matrix = new WebKitCSSMatrix(style.webkitTransform);
+            if (matrix.m41 <= -535) {
+                console.log("Oops you've run out of money!");
+            } else {
+            console.log(matrix.m41);
+            if (matrix.m41 == 0) {
+            matrix.m41 += 30;
+            } else {
+                console.log(matrix.m41);
+                var newVal = matrix.m41 - 30;
+                var newValPositive =- newVal
+                console.log(newValPositive);
+                matrix.m41 = newValPositive;
+            }
+            var code = "translate(-" + matrix.m41 + "px," + matrix.m41 + "px)";
+            console.log(code);
+            player.style.WebkitTransform = code;
+            }
+        }
+        function moveUp50() {
+            var player = document.getElementById("mountain");
+            var style = window.getComputedStyle(player);
+            var matrix = new WebKitCSSMatrix(style.webkitTransform);
+            if (matrix.m41 <= -535) {
+                console.log("Oops you've run out of money!");
+            } else {
+            console.log(matrix.m41);
+            if (matrix.m41 == 0) {
+            matrix.m41 += 50;
+            } else {
+                console.log(matrix.m41);
+                var newVal = matrix.m41 - 50;
+                var newValPositive =- newVal
+                console.log(newValPositive);
+                matrix.m41 = newValPositive;
+            }
+            var code = "translate(-" + matrix.m41 + "px," + matrix.m41 + "px)";
+            console.log(code);
+            player.style.WebkitTransform = code;
+            }
+        }
+        function moveUp100() {
+            var player = document.getElementById("mountain");
+            var style = window.getComputedStyle(player);
+            var matrix = new WebKitCSSMatrix(style.webkitTransform);
+            if (matrix.m41 <= -535) {
+                console.log("Oops you've run out of money!");
+            } else {
+            console.log(matrix.m41);
+            if (matrix.m41 == 0) {
+            matrix.m41 += 100;
+            } else {
+                console.log(matrix.m41);
+                var newVal = matrix.m41 - 100;
+                var newValPositive =- newVal
+                console.log(newValPositive);
+                matrix.m41 = newValPositive;
+            }
+            var code = "translate(-" + matrix.m41 + "px," + matrix.m41 + "px)";
+            console.log(code);
+            player.style.WebkitTransform = code;
+            }
+        }
+
+    </script>
+</body>
+</html>
